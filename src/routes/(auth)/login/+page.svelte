@@ -3,7 +3,11 @@
 	import type { PageData } from './$types';
 	import LoginForm from './loginForm.svelte';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <Card.Root class="m-auto w-full">

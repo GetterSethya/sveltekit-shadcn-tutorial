@@ -5,7 +5,11 @@
 	import { registerSchema, type RegisterSchema } from './schema';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let data: SuperValidated<Infer<RegisterSchema>>;
+	interface Props {
+		data: SuperValidated<Infer<RegisterSchema>>;
+	}
+
+	let { data }: Props = $props();
 
 	const form = superForm(data, {
 		validators: zodClient(registerSchema)
@@ -16,31 +20,39 @@
 
 <form action="/register" method="post" use:enhance>
 	<Form.Field {form} name="email">
-		<Form.Control let:attrs>
-			<Form.Label>Email</Form.Label>
-			<Input {...attrs} bind:value={$formData.email} />
-		</Form.Control>
+		<Form.Control >
+			{#snippet children({ attrs })}
+						<Form.Label>Email</Form.Label>
+				<Input {...attrs} bind:value={$formData.email} />
+								{/snippet}
+				</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Field {form} name="name">
-		<Form.Control let:attrs>
-			<Form.Label>Name</Form.Label>
-			<Input {...attrs} bind:value={$formData.name} />
-		</Form.Control>
+		<Form.Control >
+			{#snippet children({ attrs })}
+						<Form.Label>Name</Form.Label>
+				<Input {...attrs} bind:value={$formData.name} />
+								{/snippet}
+				</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Field {form} name="password">
-		<Form.Control let:attrs>
-			<Form.Label>Password</Form.Label>
-			<Input type="password" {...attrs} bind:value={$formData.password} />
-		</Form.Control>
+		<Form.Control >
+			{#snippet children({ attrs })}
+						<Form.Label>Password</Form.Label>
+				<Input type="password" {...attrs} bind:value={$formData.password} />
+								{/snippet}
+				</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Field {form} name="passwordConfirm">
-		<Form.Control let:attrs>
-			<Form.Label>Confirm Password</Form.Label>
-			<Input type="password" {...attrs} bind:value={$formData.passwordConfirm} />
-		</Form.Control>
+		<Form.Control >
+			{#snippet children({ attrs })}
+						<Form.Label>Confirm Password</Form.Label>
+				<Input type="password" {...attrs} bind:value={$formData.passwordConfirm} />
+								{/snippet}
+				</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Button class="w-full">Register</Form.Button>
